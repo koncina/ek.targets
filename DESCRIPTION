@@ -1,0 +1,15 @@
+Package: ek.targets
+Type: Package
+Title: My targets helper functions
+Version: 0.0.0.9000
+Authors@R: person("Eric", "Koncina", email = "mail@koncina.eu", role = c("aut", "cre"))
+Description: targets helper functions.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: callr,
+ fs,
+ here,
+ rmarkdown,
+ targets
+RoxygenNote: 7.1.1
