@@ -1,5 +1,11 @@
 NULL
 
+is_draft <- function(rmd) {
+  rmarkdown::yaml_front_matter(rmd) %>%
+    pluck("draft") %>%
+    isTRUE()
+}
+
 #' Knit report within a targets pipeline
 #'
 #' Knit the report and store the rendered file in the shared output folder.
@@ -17,6 +23,12 @@ NULL
 #' @export
 knit_report <- function(rmd, output_format) {
   tar_cancel(is.null(rmd))
+
+  if (is_draft(rmd)) {
+    message("Skipping ", rmd_date, "-", basename(rmd), " (draft)")
+    tar_cancel()
+  }
+
   rmd_date <- created(rmd)
   message("Knitting ", rmd_date, "-", basename(rmd))
   if (!file.exists(rmd)) stop("Rmd file doesn't exist!", call. = FALSE)
