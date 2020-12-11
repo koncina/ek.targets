@@ -24,12 +24,13 @@ is_draft <- function(rmd) {
 knit_report <- function(rmd, output_format) {
   tar_cancel(is.null(rmd))
 
+  rmd_date <- created(rmd)
+
   if (is_draft(rmd)) {
     message("Skipping ", rmd_date, "-", basename(rmd), " (draft)")
     tar_cancel()
   }
 
-  rmd_date <- created(rmd)
   message("Knitting ", rmd_date, "-", basename(rmd))
   if (!file.exists(rmd)) stop("Rmd file doesn't exist!", call. = FALSE)
 
