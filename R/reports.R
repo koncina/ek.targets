@@ -41,9 +41,9 @@ knit_report <- function(rmd, output_format) {
   )
 
 
-  dated_output_file <- basename(rmd)
+  dated_output_file <- basename(output_file)
   if (is.na(str_extract(dated_output_file, "^\\d{4}-\\d{2}-\\d{2}-"))) {
-    rmd_date <- created(rmd)
+    rmd_date <- created(output_file)
     dated_output_file <- paste0(rmd_date,
                                 "-",
                                 dated_output_file)
