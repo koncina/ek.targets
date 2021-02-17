@@ -1,9 +1,8 @@
 NULL
 
 is_draft <- function(rmd) {
-  rmarkdown::yaml_front_matter(rmd) %>%
-    pluck("draft") %>%
-    isTRUE()
+  x <- rmarkdown::yaml_front_matter(rmd)
+  isTRUE(x[["draft"]])
 }
 
 #' Knit report within a targets pipeline
@@ -16,6 +15,7 @@ is_draft <- function(rmd) {
 #' @importFrom fs file_move
 #' @importFrom callr r
 #' @importFrom targets tar_cancel
+#' @importFrom stringr str_extract
 #'
 #' @param rmd The Rmd file to be rendered
 #' @param output_format The rmarkdown output format to be used
@@ -24,14 +24,12 @@ is_draft <- function(rmd) {
 knit_report <- function(rmd, output_format) {
   tar_cancel(is.null(rmd))
 
-  rmd_date <- created(rmd)
-
   if (is_draft(rmd)) {
-    message("Skipping ", rmd_date, "-", basename(rmd), " (draft)")
+    message("Skipping ", basename(rmd), " (draft)")
     tar_cancel()
   }
 
-  message("Knitting ", rmd_date, "-", basename(rmd))
+  message("Knitting ", basename(rmd))
   if (!file.exists(rmd)) stop("Rmd file doesn't exist!", call. = FALSE)
 
   # callr by gabenbuie https://github.com/rstudio/gt/issues/297#issuecomment-497778735
@@ -42,9 +40,16 @@ knit_report <- function(rmd, output_format) {
                                       knit_root_dir = here::here())
   )
 
-  file_move(output_file, shared_path("reports", file.path(get_rel_path(),
-                                                          paste0(rmd_date,
-                                                                 "-",
-                                                                 basename(output_file)))))
-}
 
+  dated_output_file <- basename(rmd)
+  if (is.na(str_extract(dated_output_file, "^\\d{4}-\\d{2}-\\d{2}-"))) {
+    rmd_date <- created(rmd)
+    dated_output_file <- paste0(rmd_date,
+                                "-",
+                                dated_output_file)
+  }
+
+
+  file_move(output_file, shared_path("reports", file.path(get_rel_path(),
+                                                          dated_output_file)))
+}
