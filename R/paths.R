@@ -5,6 +5,9 @@ get_rel_path <- function() {
   path_join(h)
 }
 
+#' @importFrom purrr accumulate
+#' @importFrom fs path_split path_rel file_exists
+#'
 #' @export
 rel_project <- function(marker_file = ".projects", from = TRUE) {
   x <- accumulate(path_split(getwd())[[1]], file.path)

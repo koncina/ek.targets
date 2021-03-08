@@ -10,6 +10,7 @@ LazyData: true
 Imports: callr,
  fs,
  here,
+ purrr,
  ragg,
  rmarkdown,
  targets
