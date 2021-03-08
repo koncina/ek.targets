@@ -5,6 +5,20 @@ is_draft <- function(rmd) {
   isTRUE(x[["draft"]])
 }
 
+#' @importFrom rappdirs user_data_dir
+#' @importFrom fs file_copy dir_create
+#'
+#' @export
+share_report <- function(report) {
+  f <- file.path(user_data_dir("reports"),
+                 paste0(rel_project(), ".pdf"))
+  dir_create(dirname(f))
+  file_copy(report[1],
+            f,
+            overwrite = TRUE)
+}
+
+
 #' Knit report within a targets pipeline
 #'
 #' Knit the report and store the rendered file in the shared output folder.
