@@ -82,7 +82,7 @@ knit_report <- function(rmd, output_format) {
 tar_report <- function(name, rmd) {
 
   if (is_draft(rmd)) {
-    message("Skipping ", basename(rmd), " (draft)")
+    targets:::cli_cancel(paste(basename(rmd), "(draft)"))
     cue <- targets::tar_cue(mode = "never")
   } else {
     cue <- targets::tar_option_get("cue")
