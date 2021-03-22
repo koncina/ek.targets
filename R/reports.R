@@ -36,6 +36,7 @@ share_report <- function(report) {
 #'
 #' @export
 knit_report <- function(rmd, output_format) {
+  .Deprecated(new = "tar_report")
   tar_cancel(is.null(rmd))
 
   if (is_draft(rmd)) {
@@ -66,4 +67,29 @@ knit_report <- function(rmd, output_format) {
 
   file_move(output_file, shared_path("reports", file.path(get_rel_path(),
                                                           dated_output_file)))
+}
+
+#' Knit the report and store the rendered file in the shared output folder.
+#' A wrapper around `tarchetypes::tar_render()`
+#'
+#' @importFrom tarchetypes tar_render
+#' @importFrom targets tar_cancel tar_option_get tar_cue
+#'
+#' @param name Symbol, name of the target
+#' @param rmd The Rmd file of the report to be rendered
+#'
+#' @export
+tar_report <- function(name, rmd) {
+
+  if (is_draft(rmd)) {
+    message("Skipping ", basename(rmd), " (draft)")
+    cue <- targets::tar_cue(mode = "never")
+  } else {
+    cue <- targets::tar_option_get("cue")
+  }
+
+  tar_render_raw(
+    name = as.character(substitute(name)),
+    path = rmd,
+    cue = cue)
 }

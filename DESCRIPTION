@@ -13,5 +13,6 @@ Imports: callr,
  purrr,
  ragg,
  rmarkdown,
- targets
+ targets,
+ tarchetypes
 RoxygenNote: 7.1.1
