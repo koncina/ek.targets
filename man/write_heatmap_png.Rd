@@ -10,7 +10,8 @@ write_heatmap_png(
   width = 500,
   height = 500,
   units = "px",
-  res = 150
+  res = 150,
+  ...
 )
 }
 \arguments{

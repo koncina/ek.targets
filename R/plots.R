@@ -24,12 +24,12 @@ write_plot <- function(x, filename, ...) {
 #' @param width,height,units,res The settings for the output file
 #'
 #' @export
-write_heatmap_png <- function(x, filename, width = 500, height = 500, units = "px", res = 150) {
+write_heatmap_png <- function(x, filename, width = 500, height = 500, units = "px", res = 150, ...) {
   stopifnot(str_detect(filename, "\\.png$"))
   f <- shared_path("reports", file.path(get_rel_path(), "plots", filename))
   dir_create(dirname(f))
   agg_png(f, width = width, height = height, units = units, res = res)
-  draw(x)
+  draw(x, ...)
   invisible(dev.off())
   f
 }
