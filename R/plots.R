@@ -8,7 +8,7 @@
 #'
 #' @export
 write_plot <- function(x, filename, ...) {
-  f <- shared_path("reports", file.path(get_rel_path(), "plots", filename))
+  f <- shared_path("reports", file.path(get_rel_path(remove = 0), "plots", filename))
   dir_create(dirname(f))
   ggsave(f, plot = x, ...)
   f

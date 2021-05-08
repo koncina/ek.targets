@@ -1,7 +1,7 @@
-get_rel_path <- function() {
+get_rel_path <- function(remove = 1) {
   h <- here()
   h <- path_split(h)[[1]]
-  h <- h[(which(h == "projects") + 1):(length(h) - 1)]
+  h <- h[(which(h == "projects") + 1):(length(h) - remove)]
   path_join(h)
 }
 
