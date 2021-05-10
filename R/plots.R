@@ -26,7 +26,7 @@ write_plot <- function(x, filename, ...) {
 #' @export
 write_heatmap_png <- function(x, filename, width = 500, height = 500, units = "px", res = 150, ...) {
   stopifnot(str_detect(filename, "\\.png$"))
-  f <- shared_path("reports", file.path(get_rel_path(), "plots", filename))
+  f <- shared_path("reports", file.path(get_rel_path(remove = 0), "plots", filename))
   dir_create(dirname(f))
   agg_png(f, width = width, height = height, units = units, res = res)
   draw(x, ...)
@@ -46,7 +46,7 @@ write_heatmap_png <- function(x, filename, width = 500, height = 500, units = "p
 #' @export
 write_heatmap <- function(x, filename, width = 8, height = 8) {
   stopifnot(str_detect(filename, "\\.pdf$"))
-  f <- shared_path("reports", file.path(get_rel_path(), "plots", filename))
+  f <- shared_path("reports", file.path(get_rel_path(remove = 0), "plots", filename))
   dir_create(dirname(f))
   pdf(f, width = width, height = height)
   draw(x)
