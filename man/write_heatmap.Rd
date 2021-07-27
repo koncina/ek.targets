@@ -4,7 +4,7 @@
 \alias{write_heatmap}
 \title{Save a ComplexHeatmap as a standalone pdf file}
 \usage{
-write_heatmap(x, filename, width = 8, height = 8)
+write_heatmap(x, filename, ..., width = NA, height = NA)
 }
 \arguments{
 \item{x}{a ComplexHeatmap object}

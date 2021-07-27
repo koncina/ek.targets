@@ -7,11 +7,11 @@
 write_heatmap_png(
   x,
   filename,
-  width = 500,
-  height = 500,
-  units = "px",
-  res = 150,
-  ...
+  ...,
+  width = NA,
+  height = NA,
+  units = "mm",
+  res = 150
 )
 }
 \arguments{
