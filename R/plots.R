@@ -7,10 +7,10 @@
 #' @param filename The basename of the output file
 #'
 #' @export
-write_plot <- function(x, filename, ...) {
-  f <- shared_path("reports", file.path(get_rel_path(remove = 0), "plots", filename))
+write_plot <- function(x, filename, device = grDevices::png, ...) {
+  f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
   dir_create(dirname(f))
-  ggsave(f, plot = x, ...)
+  ggsave(f, plot = x, device = device, ...)
   f
 }
 
