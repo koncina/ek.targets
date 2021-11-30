@@ -41,9 +41,9 @@ write_plot <- function(x, filename, device = grDevices::png, size = "auto", widt
 
   if (size == "auto") {
     if (class(x) == "ggplot") x <- ggplotGrob(x)
-    width <- grid::convertWidth(sum(g$widths),
+    width <- grid::convertWidth(sum(x$widths),
                                 unitTo = units, valueOnly = TRUE)
-    height = grid::convertHeight(sum(g$heights),
+    height = grid::convertHeight(sum(x$heights),
                                  unitTo = units, valueOnly = TRUE)
   }
 
