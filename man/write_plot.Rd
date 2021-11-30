@@ -4,7 +4,16 @@
 \alias{write_plot}
 \title{Save a ggplot as a standalone file using ggsave}
 \usage{
-write_plot(x, filename, device = grDevices::png, ...)
+write_plot(
+  x,
+  filename,
+  device = grDevices::png,
+  size = "auto",
+  width = NA,
+  height = NA,
+  units = "cm",
+  ...
+)
 }
 \arguments{
 \item{x}{a ggplot}

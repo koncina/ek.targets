@@ -1,16 +1,53 @@
-#' Save a ggplot as a standalone file using ggsave
+#' Set absolute ggplot panel sizes (adapted from https://stackoverflow.com/a/32583612)
 #'
-#' @importFrom ggplot2 ggsave
+#' @importFrom ggplot2 ggplotGrob
 #' @importFrom fs dir_create
 #'
 #' @param x a ggplot
 #' @param filename The basename of the output file
 #'
 #' @export
-write_plot <- function(x, filename, device = grDevices::png, ...) {
+#
+set_panel_size <- function(p = NULL, g = ggplotGrob(p),
+                           width = unit(3, "cm"),
+                           height = unit(3, "cm")){
+
+  panels <- grep("panel", g$layout$name)
+  panel_index_col <- unique(g$layout$l[panels])
+  panel_index_row <- unique(g$layout$t[panels])
+  n_col <- length(panel_index_col)
+  n_row <- length(panel_index_row)
+
+  g$widths[panel_index_col] <-  rep(width,  n_col)
+  g$heights[panel_index_row] <- rep(height, n_row)
+
+  g
+}
+
+
+#' Save a ggplot as a standalone file using ggsave
+#'
+#' @importFrom ggplot2 ggsave ggplotGrob
+#' @importFrom fs dir_create
+#' @importFrom grid convertWidth convertHeight
+#'
+#' @param x a ggplot
+#' @param filename The basename of the output file
+#'
+#' @export
+write_plot <- function(x, filename, device = grDevices::png, size = "auto", width = NA, height = NA, units = "cm",...) {
   f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
   dir_create(dirname(f))
-  ggsave(f, plot = x, device = device, ...)
+
+  if (size == "auto") {
+    if (class(x) == "ggplot") x <- ggplotGrob(x)
+    width <- grid::convertWidth(sum(g$widths),
+                                unitTo = units, valueOnly = TRUE)
+    height = grid::convertHeight(sum(g$heights),
+                                 unitTo = units, valueOnly = TRUE)
+  }
+
+  ggsave(f, plot = x, device = device, width = width, height = height, ...)
   f
 }
 
