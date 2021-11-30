@@ -35,19 +35,23 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 #' @param filename The basename of the output file
 #'
 #' @export
-write_plot <- function(x, filename, device = grDevices::png, size = "auto", width = NA, height = NA, units = "cm",...) {
+write_plot <- function(x, filename, device = grDevices::png, width = NA, height = NA, units = "cm", ...) {
+
   f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
   dir_create(dirname(f))
 
-  if (size == "auto") {
-    if (class(x) == "ggplot") x <- ggplotGrob(x)
+  if ((width == "auto" | height == "auto") & class(x) == "ggplot")
+    x <- ggplotGrob(x)
+
+  if (width == "auto")
     width <- grid::convertWidth(sum(x$widths),
                                 unitTo = units, valueOnly = TRUE)
+
+  if (height == "auto")
     height = grid::convertHeight(sum(x$heights),
                                  unitTo = units, valueOnly = TRUE)
-  }
 
-  ggsave(f, plot = x, device = device, width = width, height = height, ...)
+  ggsave(f, plot = x, device = device, width = width, height = height, units = units, ...)
   f
 }
 

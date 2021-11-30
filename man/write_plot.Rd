@@ -8,7 +8,6 @@ write_plot(
   x,
   filename,
   device = grDevices::png,
-  size = "auto",
   width = NA,
   height = NA,
   units = "cm",
