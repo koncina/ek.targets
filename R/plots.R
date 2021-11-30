@@ -40,14 +40,14 @@ write_plot <- function(x, filename, device = grDevices::png, width = NA, height 
   f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
   dir_create(dirname(f))
 
-  if ((width == "auto" | height == "auto") & class(x) == "ggplot")
+  if (isTRUE(width == "auto" | height == "auto") & class(x) == "ggplot")
     x <- ggplotGrob(x)
 
-  if (width == "auto")
+  if (isTRUE(width == "auto"))
     width <- grid::convertWidth(sum(x$widths),
                                 unitTo = units, valueOnly = TRUE)
 
-  if (height == "auto")
+  if (isTRUE(height == "auto"))
     height = grid::convertHeight(sum(x$heights),
                                  unitTo = units, valueOnly = TRUE)
 
