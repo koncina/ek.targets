@@ -1,3 +1,16 @@
+
+#' @importFrom fs dir_create
+#'
+#' @export
+get_out_path <- function(filename, folder = "reports") {
+  stopifnot(length(folder = 1))
+  f <- shared_path(folder,
+                   file.path(get_rel_path(remove = 0), filename))
+
+  dir_create(dirname(f))
+  f
+}
+
 get_rel_path <- function(remove = 1) {
   h <- here()
   h <- path_split(h)[[1]]

@@ -37,8 +37,7 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 #' @export
 write_plot <- function(x, filename, device = grDevices::png, width = NA, height = NA, units = "cm", ...) {
 
-  f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
-  dir_create(dirname(f))
+  f <- get_out_path(filename)
 
   if (isTRUE(width == "auto" | height == "auto") & class(x) == "ggplot")
     x <- ggplotGrob(x)
@@ -77,8 +76,7 @@ get_heatmap_size <- function(ht, units = "px", ...) {
 #' @export
 write_heatmap_png <- function(x, filename, ..., width = NA, height = NA, units = "mm", res = 150) {
   stopifnot(str_detect(filename, "\\.png$"))
-  f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
-  dir_create(dirname(f))
+  f <- get_out_path(filename)
 
   if (is.na(width) | is.na(height)) {
     ht_size <- get_heatmap_size(x, units = units, ...)
@@ -104,8 +102,7 @@ write_heatmap_png <- function(x, filename, ..., width = NA, height = NA, units =
 #' @export
 write_heatmap <- function(x, filename, ..., width = NA, height = NA) {
   stopifnot(str_detect(filename, "\\.pdf$"))
-  f <- shared_path("reports", file.path(get_rel_path(remove = 0), filename))
-  dir_create(dirname(f))
+  f <- get_out_path(filename)
 
   if (is.na(width) | is.na(height)) {
     ht_size <- get_heatmap_size(x, units = "inches", ...)
