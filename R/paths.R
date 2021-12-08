@@ -3,7 +3,7 @@
 #'
 #' @export
 get_out_path <- function(filename, folder = "reports") {
-  stopifnot(length(folder = 1))
+  stopifnot(length(folder) == 1)
   f <- shared_path(folder,
                    file.path(get_rel_path(remove = 0), filename))
 
