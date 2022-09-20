@@ -9,17 +9,27 @@
 #' @export
 #
 set_panel_size <- function(p = NULL, g = ggplotGrob(p),
-                           width = unit(3, "cm"),
-                           height = unit(3, "cm")){
-
+                           width = NULL,
+                           height = NULL){
   panels <- grep("panel", g$layout$name)
   panel_index_col <- unique(g$layout$l[panels])
   panel_index_row <- unique(g$layout$t[panels])
   n_col <- length(panel_index_col)
   n_row <- length(panel_index_row)
 
-  g$widths[panel_index_col] <-  rep(width,  n_col)
-  g$heights[panel_index_row] <- rep(height, n_row)
+
+
+  if (!is.null(width)) {
+    stopifnot(inherits(width, "unit"))
+    if (n_col > 1 & length(width == 1)) width <- rep(width,  n_col)
+    g$widths[panel_index_col] <- width
+  }
+
+  if (!is.null(height)) {
+    stopifnot(inherits(height, "unit"))
+    if (n_row > 1 & length(height == 1)) height <- rep(height,  n_row)
+    g$heights[panel_index_row] <- height
+  }
 
   g
 }
