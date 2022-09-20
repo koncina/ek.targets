@@ -21,13 +21,13 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 
   if (!is.null(width)) {
     stopifnot(inherits(width, "unit"))
-    if (n_col > 1 & length(width == 1)) width <- rep(width,  n_col)
+    if (n_col > 1 & length(width) == 1) width <- rep(width,  n_col)
     g$widths[panel_index_col] <- width
   }
 
   if (!is.null(height)) {
     stopifnot(inherits(height, "unit"))
-    if (n_row > 1 & length(height == 1)) height <- rep(height,  n_row)
+    if (n_row > 1 & length(height) == 1) height <- rep(height,  n_row)
     g$heights[panel_index_row] <- height
   }
 
