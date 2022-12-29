@@ -4,12 +4,7 @@
 \alias{set_panel_size}
 \title{Set absolute ggplot panel sizes (adapted from https://stackoverflow.com/a/32583612)}
 \usage{
-set_panel_size(
-  p = NULL,
-  g = ggplotGrob(p),
-  width = unit(3, "cm"),
-  height = unit(3, "cm")
-)
+set_panel_size(p = NULL, g = ggplotGrob(p), width = NULL, height = NULL)
 }
 \arguments{
 \item{x}{a ggplot}

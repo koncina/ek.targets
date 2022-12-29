@@ -1,7 +1,7 @@
 Package: ek.targets
 Type: Package
 Title: My targets helper functions
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: person("Eric", "Koncina", email = "mail@koncina.eu", role = c("aut", "cre"))
 Description: targets helper functions.
 License: GPL-3
@@ -15,4 +15,4 @@ Imports: callr,
  rmarkdown,
  targets,
  tarchetypes
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
