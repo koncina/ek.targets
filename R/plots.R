@@ -49,7 +49,7 @@ write_plot <- function(x, filename, device = grDevices::png, width = NA, height 
 
   f <- get_report_path(filename)
 
-  if (isTRUE(width == "auto" | height == "auto") & class(x) == "ggplot")
+  if (isTRUE(width == "auto" || height == "auto") && "ggplot" %in% class(x))
     x <- ggplotGrob(x)
 
   if (isTRUE(width == "auto"))
