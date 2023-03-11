@@ -39,7 +39,7 @@ set_panel_size <- function(p = NULL, g = ggplotGrob(p),
 #'
 #' @importFrom ggplot2 ggsave ggplotGrob
 #' @importFrom fs dir_create
-#' @importFrom grid convertWidth convertHeight
+#' @importFrom grid convertWidth convertHeight unitType
 #'
 #' @param x a ggplot
 #' @param filename The basename of the output file
@@ -49,16 +49,16 @@ write_plot <- function(x, filename, device = grDevices::png, width = NA, height 
 
   f <- get_report_path(filename)
 
-  if (isTRUE(width == "auto" || height == "auto") && "ggplot" %in% class(x))
+  if ("ggplot" %in% class(x))
     x <- ggplotGrob(x)
 
-  if (isTRUE(width == "auto"))
+  if (isTRUE(is.na(width)) && !"null" %in% unitType(x$widths))
     width <- grid::convertWidth(sum(x$widths),
                                 unitTo = units, valueOnly = TRUE)
 
-  if (isTRUE(height == "auto"))
-    height = grid::convertHeight(sum(x$heights),
-                                 unitTo = units, valueOnly = TRUE)
+  if (isTRUE(is.na(height)) && !"null" %in% unitType(x$heights))
+    height <- grid::convertHeight(sum(x$heights),
+                                  unitTo = units, valueOnly = TRUE)
 
   ggsave(f, plot = x, device = device, width = width, height = height, units = units, ...)
   f
